@@ -8,6 +8,7 @@
     {
         ulong[] newStack;
         ulong[] newMinimum;
+
         if (top == stack.Length - 1)
         {
             newStack = new ulong[stack.Length * 2];
@@ -95,11 +96,74 @@
     }
 }
 
+//Task 2 -------------------------------------------------
+class Stack64UList
+{
+
+    private List<ulong> stack = new List<ulong>();
+    private List<ulong> minimum = new List<ulong>();
+
+    public ulong push(ulong value)
+    {
+        stack.Add(value);
+
+        if (stack.Count - 1 == 0) minimum.Add(value);
+
+        else if (value < minimum[minimum.Count - 1]) minimum.Add(value);
+
+        else minimum.Add(minimum[minimum.Count - 1]);
+
+        return 1;
+    }
+
+    public int pop()
+    {
+        if (stack.Count == 0) throw new Exception("The array is empty");
+
+        else
+        {
+            stack.RemoveAt(stack.Count - 1);
+            minimum.RemoveAt(minimum.Count - 1);
+            return 1;
+        }
+    }
+
+    public int? peek()
+    {
+        if (stack.Count - 1 == -1) throw new Exception("The array is empty");
+
+        else return (int)stack[stack.Count - 1];
+    }
+
+    public int isEmpty()
+    {
+        if (stack.Count == 0) return 1;
+        else return 0;
+
+    }
+
+    public int stackLength()
+    {
+        return stack.Count;
+    }
+
+    public int? minValue()
+    {
+        if (stack.Count != 0) return (int)minimum[minimum.Count - 1];
+        else throw new Exception("The array is empty");
+    }
+}
+
 class Program
 {
     static void Main()
     {
-        Stack64U stack = new Stack64U();
+        //Task 1
+        //Stack64U stack = new Stack64U();
+
+        //Task 2
+        Stack64UList stack = new Stack64UList();
+
         ulong data;
 
         while (true)
@@ -146,9 +210,10 @@ class Program
 
                     break;
 
-                case 7:
+                //Task1
+                /*case 7:
                     Console.WriteLine("Stack capacity is: " + stack.stackCapacity());
-                    break;
+                    break;*/
             }
         }
     }
